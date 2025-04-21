@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Dynasty - RPS Gamble</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Cinzel', serif;
+      background: linear-gradient(to bottom, #120818, #1d0b2e);
+      color: #f0eaff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .game-container {
+      text-align: center;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 15px;
+      border: 1px solid #8041a6;
+      box-shadow: 0 0 20px rgba(128, 65, 166, 0.3);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #ffa64d;
+      text-shadow: 0 0 10px #ff8c00;
+    }
+
+    .wallet-input {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      border-radius: 5px;
+      border: 1px solid #ffb347;
+      background: #1d0b2e;
+      color: #f0eaff;
+    }
+
+    .choices button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1.1rem;
+      background-color: #ff8c00;
+      color: #120818;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff8c00;
+      transition: transform 0.2s ease;
+    }
+
+    .choices button:hover {
+      transform: scale(1.1);
+    }
+
+    .glow-points {
+      font-size: 1.4rem;
+      color: #ffb347;
+      margin-top: 15px;
+      text-shadow: 0 0 8px #ff9f43;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .glow-points.animate {
+      text-shadow: 0 0 15px #ffc266, 0 0 30px #ff8c00;
+      transform: scale(1.1);
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    #result.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .powered-by {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #ffa64d;
+      text-align: center;
+      text-shadow: 0 0 6px #ff8c00;
+      font-style: italic;
+    }
+
+    .signverse-glow {
+      font-weight: bold;
+      color: #ffcc80;
+      animation: glowPulse 2.5s infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% {
+        text-shadow: 0 0 6px #ff8c00;
+      }
+      50% {
+        text-shadow: 0 0 16px #ffb347;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Sign Gamble: RPS</h1>
+
+    <div class="wallet-input">
+      <input type="text" id="wallet" placeholder="Paste your wallet address" />
+    </div>
+
+    <div class="choices">
+      <button onclick="play('rock')">🪨 Rock</button>
+      <button onclick="play('paper')">📜 Paper</button>
+      <button onclick="play('scissors')">✂️ Scissors</button>
+    </div>
+
+    <div id="sign-points" class="glow-points">Sign Points: 100</div>
+
+    <div id="result"></div>
+
+    <div class="powered-by">
+      Powered by <span class="signverse-glow">Sign Verse</span>
+    </div>
+  </div>
+
+  <script>
+    let signPoints = 100;
+
+    function getComputerChoice() {
+      const choices = ['rock', 'paper', 'scissors'];
+      return choices[Math.floor(Math.random() * 3)];
+    }
+
+    function play(playerChoice) {
+      if (signPoints <= 0) {
+        showResult("You're out of Sign Points!");
+        return;
+      }
+
+      const computer = getComputerChoice();
+      let result;
+
+      if (playerChoice === computer) {
+        result = "Draw! No points lost.";
+      } else if (
+        (playerChoice === 'rock' && computer === 'scissors') ||
+        (playerChoice === 'paper' && computer === 'rock') ||
+        (playerChoice === 'scissors' && computer === 'paper')
+      ) {
+        result = `You win! ${playerChoice} beats ${computer}. +10 SP`;
+        signPoints += 10;
+      } else {
+        result = `You lose! ${computer} beats ${playerChoice}. -10 SP`;
+        signPoints -= 10;
+      }
+
+      updateSignPointsDisplay();
+      showResult(result);
+    }
+
+    function updateSignPointsDisplay() {
+      const el = document.getElementById('sign-points');
+      el.textContent = `Sign Points: ${signPoints}`;
+      el.classList.add('animate');
+      setTimeout(() => el.classList.remove('animate'), 500);
+    }
+
+    function showResult(msg) {
+      const res = document.getElementById('result');
+      res.textContent = msg;
+      res.classList.add('show');
+      setTimeout(() => res.classList.remove('show'), 2000);
+    }
+  </script>
+</body>
+</html>
