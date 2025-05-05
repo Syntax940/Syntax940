@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>MONAD</title> 
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: linear-gradient(to bottom right, #111, #5b21b6);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .card {
+      background-color: #1f1f1f;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    input {
+      padding: 0.5rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      border: none;
+    }
+    button {
+      padding: 0.6rem 1.2rem;
+      background-color: #8b5cf6;
+      border: none;
+      border-radius: 0.5rem;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #a78bfa;
+    }
+    .reward {
+      font-size: 2rem;
+      color: #facc15;
+      margin-top: 1rem;
+    }
+  </style> 
+ </head> 
+ <body> 
+  <h1>CLAIM MONAD</h1> 
+  <div class="card"> 
+   <div id="form-section"> 
+    <input type="text" id="wallet" placeholder="Paste your wallet address"> <button onclick="claimDust()">Claim Your Airdrop</button> 
+   </div> 
+   <div id="result" style="display: none;"> 
+    <p>You received:</p> 
+    <div class="reward" id="reward-amount"></div> 
+    <p>Thanks for being part of the storm.</p> 
+   </div> 
+  </div> 
+  <script>
+    function claimDust() {
+      const wallet = document.getElementById('wallet').value;
+      if (!wallet) return alert('Please enter a wallet address.');
+
+      let reward = 1;
+      const bonus = Math.random();
+
+      if (bonus > 0.99) {
+        reward = 500 + Math.floor(Math.random() * 500); // Golden Comet
+      } else if (bonus > 0.8) {
+        reward = 1 + Math.floor(Math.random() * 50); // Lucky Sparkle
+      }
+
+      document.getElementById('form-section').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('reward-amount').innerText = `$${reward}`;
+    }
+  </script> 
+ </body>
+</html>
