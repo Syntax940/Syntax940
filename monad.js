@@ -1,8 +1,8 @@
 const { ethers } = require("ethers");
 
 // Berachain Testnet Configuration
-const RPC_URL = "https://rpc.nexus.xyz";
-const PRIVATE_KEY = "your private key here";
+const RPC_URL = "https://testnet-rpc.monad.xyz";
+const PRIVATE_KEY = "fa35f02d36c501707cb71e6b710353859ea0ede73eec4c205d2b938cef4f60e8";
 const provider = new ethers.JsonRpcProvider(RPC_URL);
 const wallet = new ethers.Wallet(PRIVATE_KEY, provider);
 
